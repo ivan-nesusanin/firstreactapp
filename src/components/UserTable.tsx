@@ -1,47 +1,31 @@
-import React, { useRef, useState } from 'react';
-
-import 'antd/dist/antd.css';
+import { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import { Button, Input, Space, Table } from 'antd';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
+import { dataBase } from '../assets/data'
+// import axios from 'axios';
 
 interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
+  id: number,
+  first_name: string,
+  lst_name: string,
+  department: string,
 }
 
 type DataIndex = keyof DataType;
 
-const data: DataType[] = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-  },
-];
+const data: DataType[] = dataBase;
+
+// const fetchData = async (): DataType[] => {
+//   const response = await axios.get<DataType[]>('https://run.mocky.io/v3/8b3a9c3c-449c-4bab-8559-7d0cdb0c7091');
+//   return response.data
+// };
+
+// const data: DataType[] = fetchData();
+
+const dataSource = data.map(elem => ({...elem, key: elem.id}));
 
 const UserTable = () => {
   const [searchText, setSearchText] = useState('');
@@ -122,30 +106,61 @@ const UserTable = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'First Name',
+      dataIndex: 'first_name',
+      key: 'first_name',
       width: '30%',
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('first_name'),
+      sorter: (a, b) => a.first_name.localeCompare(b.first_name),
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      width: '20%',
-      ...getColumnSearchProps('age'),
+      title: 'Last Name',
+      dataIndex: 'lst_name',
+      key: 'lst_name',
+      width: '30%',
+      ...getColumnSearchProps('lst_name'),
+      sorter: (a, b) => a.lst_name.localeCompare(b.lst_name),
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-      ...getColumnSearchProps('address'),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ['descend', 'ascend'],
+      title: 'Department',
+      dataIndex: 'department',
+      key: 'department',
+      filters: [
+        {
+          text: 'Managemet',
+          value: 'Managemet',
+        },
+        {
+          text: 'Development',
+          value: 'Development',
+        },
+        {
+          text: 'QA',
+          value: 'QA',
+        },
+        {
+          text: 'Design',
+          value: 'Design',
+        },
+        {
+          text: 'HR',
+          value: 'HR',
+        },
+      ],
+      onFilter: (value: string | number | boolean, record: DataType): boolean => record.department.includes(value as string)
     },
   ];
 
-  return <Table columns={columns} dataSource={data} />;
+  return <Table<DataType>
+    showSorterTooltip={{ title: 'Сортировать по алфавиту' }}
+    columns={columns}
+    dataSource={dataSource}
+    pagination={{
+      showSizeChanger: true,
+      pageSizeOptions: [10, 50, 100, 500, 1000]
+    }}
+    bordered={true}
+  />
 };
 
 export default UserTable;

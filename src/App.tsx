@@ -1,10 +1,10 @@
-import React from 'react';
-import './scss/App.scss';
+import './styles/App.scss';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/NavBar';
 import Home from './pages/Home';
 import Users from './pages/Users';
 import Error from './pages/Error';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
           <Route path="/*" element={<Error/>}></Route>
           <Route path="*" element={<Navigate to="/error" replace/>}/>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );

@@ -1,11 +1,8 @@
-import React from 'react';
-import '../scss/Home.scss';
-import { Typography, Button } from 'antd';
+import '../styles/Home.scss';
+import { Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { UserOutlined } from '@ant-design/icons';
-
-const { Title } = Typography;
-
+import Title from 'antd/lib/typography/Title';
 
 const Home = () => {
 
