@@ -1,0 +1,9 @@
+@mixin header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  background-color: #e3e3e3;
+  height: 50px;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif, sans-serif;
+}

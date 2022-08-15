@@ -1,8 +1,9 @@
 .error {
+  min-height: calc(100vh - 100px);
   text-align: center;
 
   h2 {
-    margin-top: 25vh;
+    padding-top: 25vh;
     color: red;
   }
 }
