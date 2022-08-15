@@ -1,7 +1,7 @@
 @import './mixins/mixins.scss';
 
 .footer {
-  @include header;
+  @include header(end);
 
   a {
     margin: 0 20px 0 10px;

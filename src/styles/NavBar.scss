@@ -1,7 +1,11 @@
 @import './mixins/mixins.scss';
 
 .navbar {
-  @include header;
+  @include header(space-between);
+
+  img {
+    margin-left: 20px;
+  }
 }
 
 .link {
