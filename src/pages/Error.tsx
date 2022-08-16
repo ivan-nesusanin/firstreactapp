@@ -8,8 +8,8 @@ const Error = () => {
   return (
     <div className="error">
       <Title level={2}>
-        Запрашиваемая страница не существует...
-        <FrownOutlined />
+        Запрашиваемая Вами страница не существует
+        <FrownOutlined style={{ marginLeft: '15px' }} />
       </Title>
       <Link to="/">
         <Button type="primary" shape="round" size="large">
