@@ -9,3 +9,7 @@
 .ant-table-pagination {
   justify-content: center !important;
 }
+
+.ant-row {
+  min-height: calc(100vh - 174px);
+}

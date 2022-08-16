@@ -4,14 +4,14 @@ import type { InputRef } from 'antd';
 import { Button, Input, Space, Table } from 'antd';
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-import { dataBase } from '../assets/data'
+import { dataBase } from '../assets/data';
 // import axios from 'axios';
 
 interface DataType {
-  id: number,
-  first_name: string,
-  lst_name: string,
-  department: string,
+  id: number;
+  first_name: string;
+  lst_name: string;
+  department: string;
 }
 
 type DataIndex = keyof DataType;
@@ -25,7 +25,7 @@ const data: DataType[] = dataBase;
 
 // const data: DataType[] = fetchData();
 
-const dataSource = data.map(elem => ({...elem, key: elem.id}));
+const dataSource = data.map((elem) => ({ ...elem, key: elem.id }));
 
 const UserTable = () => {
   const [searchText, setSearchText] = useState('');
@@ -35,7 +35,7 @@ const UserTable = () => {
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex,
+    dataIndex: DataIndex
   ) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -47,21 +47,34 @@ const UserTable = () => {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<DataType> => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ColumnType<DataType> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }) => (
       <div style={{ padding: 8 }}>
         <Input
           ref={searchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
           style={{ marginBottom: 8, display: 'block' }}
         />
         <Space>
           <Button
             type="primary"
-            onClick={() => handleSearch(selectedKeys as string[], confirm, dataIndex)}
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
             icon={<SearchOutlined />}
             size="small"
             style={{ width: 90 }}
@@ -97,7 +110,7 @@ const UserTable = () => {
         .toString()
         .toLowerCase()
         .includes((value as string).toLowerCase()),
-    onFilterDropdownVisibleChange: visible => {
+    onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
       }
@@ -127,8 +140,8 @@ const UserTable = () => {
       key: 'department',
       filters: [
         {
-          text: 'Managemet',
-          value: 'Managemet',
+          text: 'Management',
+          value: 'Management',
         },
         {
           text: 'Development',
@@ -147,21 +160,23 @@ const UserTable = () => {
           value: 'HR',
         },
       ],
-      onFilter: (value: string | number | boolean, record: DataType): boolean => record.department.includes(value as string)
+      onFilter: (value: string | number | boolean, record: DataType): boolean =>
+        record.department.includes(value as string),
     },
   ];
 
-  return <Table<DataType>
-    showSorterTooltip={{ title: 'Сортировать по алфавиту' }}
-    columns={columns}
-    dataSource={dataSource}
-    pagination={{
-      showSizeChanger: true,
-      pageSizeOptions: [10, 50, 100, 500, 1000]
-    }}
-    bordered={true}
-  />
+  return (
+    <Table<DataType>
+      showSorterTooltip={{ title: 'Сортировать по алфавиту' }}
+      columns={columns}
+      dataSource={dataSource}
+      pagination={{
+        showSizeChanger: true,
+        pageSizeOptions: [10, 50, 100, 500, 1000],
+      }}
+      bordered={true}
+    />
+  );
 };
 
 export default UserTable;
-
